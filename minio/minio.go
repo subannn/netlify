@@ -2,6 +2,7 @@ package minio
 
 import (
 	"log"
+	"os"
 
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
@@ -10,9 +11,9 @@ import (
 var MinioClient *minio.Client
 
 func RunMinio() {
-	endpoint := "192.168.0.106:9000"
-	accessKeyID := "TDIF7k0TmCXXClbV1fil"
-	secretAccessKey := "XSFbrmbtyKKGOI5QzlITE9tGpQ9Peagu4ON5FkA4"
+	endpoint := os.Getenv("ENDPOINT") 
+	accessKeyID := os.Getenv("ACCESS_KEY_ID") 
+	secretAccessKey := os.Getenv("SECRET_ACCESS_KEY") 
 	useSSL := false
 	// initialization of Minio Client
 	minioClient, err := minio.New(endpoint, &minio.Options{

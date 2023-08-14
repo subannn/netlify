@@ -6,11 +6,17 @@ import (
 	"log"
 	"strings"
 
+	// "strings"
+
 	// "io"
 	// "os"
+	"path/filepath"
 
+	"github.com/labstack/echo/v4"
 	"github.com/minio/minio-go/v7"
-	//"github.com/minio/minio-go/v7/pkg/credentials"
+	// "github.com/minio/minio-go/v7/pkg/credentials"
+
+//	"net/http"
 )
 
 const index = "index.html"
@@ -26,20 +32,31 @@ func ListObjects(ctx context.Context, minioClient *minio.Client, backetName stri
 	}
 }
 
-func parsePath(path string) (string, string)  {
-	s := strings.Split(path, "/")
-	bucketName := s[1]
-	pathName := ""
-	for i := 2;i < len(s);i++ {
-		pathName += s[i] + "/"
+func parsePath(path string) string  {
+	if path == "" {
+		return "index.html"
 	}
-	return bucketName, pathName + "index.html"
+	parsedPath := strings.Split(filepath.Clean(path), "/")
+	correctPath := ""
+	for _, v := range(parsedPath) {
+        if len(v) > 0 {
+            correctPath += v + "/"
+        }
+    }
+	if strings.Contains(correctPath, ".") {
+		correctPath = correctPath[:len(correctPath) - 1]
+	} else {
+		correctPath += "index.html"
+	}
+
+	return correctPath
 }
 
-func GetObject(ctx context.Context, minioClient *minio.Client, path string) *minio.Object{
+func GetObject(ctx context.Context, minioClient *minio.Client, c echo.Context) *minio.Object{
 	opts := minio.GetObjectOptions{}
-	backetName, filePath := parsePath(path)
-	file, err := minioClient.GetObject(ctx, backetName, filePath, opts)
+	backetName := strings.Split(c.Request().Host, ":")[0]
+	filePath := parsePath(c.Request().URL.Path)
+	file, err := minioClient.GetObject(context.Background(), backetName, filePath, opts)
 	if err != nil {
 		log.Print(err)
 	}
