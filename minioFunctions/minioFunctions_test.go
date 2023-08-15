@@ -19,9 +19,10 @@ func TestParsePath(t *testing.T) {
 		pathNames {"/qwerty", "qwerty/index.html"},
 		pathNames {"", "index.html"},
 		pathNames {"/htmlcss/files/index.html", "htmlcss/files/index.html"},
+		pathNames {"/files/../../../../../../etc/shadow", "htmlcss/files/index.html"},
 	}
 	for _, test := range tescases {
-		pathName := parsePath(test.path)
+		pathName := ParsePath(test.path)
 		assert.Equal(t, pathName, test.AnsPathName, pathName)
 	}
 }

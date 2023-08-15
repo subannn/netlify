@@ -2,11 +2,10 @@ package main
 
 import (
 	"context"
-	"net/http"
+	//"log"
 
-	"io/ioutil"
-	"log"
-
+	"mime"
+	"strings"
 
 	// "github.com/minio/minio-go/v7/pkg/credentials"
 
@@ -32,11 +31,15 @@ func main() {
   	e.Logger.Fatal(e.Start(":8000"))	
 }
 func handle(c echo.Context) error {
-	res := minioFunc.GetObject(context.Background(), minio.MinioClient, c)
-	ans, err := ioutil.ReadAll(res)
-	if err != nil {
-		log.Println(err)
-		return c.Blob(404,"application/octet-stream", ans)
+	p := minioFunc.ParsePath(c.Request().URL.Path)
+	res := minioFunc.GetObject(context.Background(), minio.MinioClient, c, p)
+
+
+	parts := strings.Split(p, ".")
+	fileType := mime.TypeByExtension("." + parts[len(parts) - 1])
+
+	if(fileType == "") {
+		fileType = "application/octet"
 	}
-	return c.Blob(http.StatusOK,"application/octet-stream", ans)
+	return c.Stream(200, fileType , res)
 }

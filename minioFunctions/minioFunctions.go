@@ -32,7 +32,7 @@ func ListObjects(ctx context.Context, minioClient *minio.Client, backetName stri
 	}
 }
 
-func parsePath(path string) string  {
+func ParsePath(path string) string  {
 	if path == "" {
 		return "index.html"
 	}
@@ -43,6 +43,7 @@ func parsePath(path string) string  {
             correctPath += v + "/"
         }
     }
+
 	if strings.Contains(correctPath, ".") {
 		correctPath = correctPath[:len(correctPath) - 1]
 	} else {
@@ -52,10 +53,10 @@ func parsePath(path string) string  {
 	return correctPath
 }
 
-func GetObject(ctx context.Context, minioClient *minio.Client, c echo.Context) *minio.Object{
+func GetObject(ctx context.Context, minioClient *minio.Client, c echo.Context, filePath string) *minio.Object{
 	opts := minio.GetObjectOptions{}
 	backetName := strings.Split(c.Request().Host, ":")[0]
-	filePath := parsePath(c.Request().URL.Path)
+
 	file, err := minioClient.GetObject(context.Background(), backetName, filePath, opts)
 	if err != nil {
 		log.Print(err)
