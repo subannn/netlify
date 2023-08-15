@@ -38,5 +38,6 @@ func handle(c echo.Context) error {
 		log.Println(err)
 		return c.Blob(404,"application/octet-stream", ans)
 	}
-	return c.Blob(http.StatusOK,"application/octet-stream", ans)
+	return c.Blob(http.StatusOK,"application/octet-stream", ans) 
+	
 }
