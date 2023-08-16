@@ -13,9 +13,9 @@ import (
 
 
 func RunMinio() *minio.Client{
-	endpoint := os.Getenv("ENDPOINT")            // "192.168.0.106:9000" 
-	accessKeyID := os.Getenv("ACCESS_KEY_ID")  		  // "TDIF7k0TmCXXClbV1fil"
-	secretAccessKey := os.Getenv("SECRET_ACCESS_KEY")  		  // "XSFbrmbtyKKGOI5QzlITE9tGpQ9Peagu4ON5FkA4"
+	endpoint := os.Getenv("ENDPOINT")            
+	accessKeyID := os.Getenv("ACCESS_KEY_ID")  		  
+	secretAccessKey := os.Getenv("SECRET_ACCESS_KEY")  		
 	useSSL := false
 	// initialiRunMiniozation of Minio Client
 	minioClient, err := minio.New(endpoint, &minio.Options{
