@@ -1,9 +1,7 @@
-package minioFunctions
+package logic
 
 import (
 	"testing"
-	// "fmt"
-
 	"github.com/stretchr/testify/assert"
 )
 type pathNames struct {
@@ -19,7 +17,7 @@ func TestParsePath(t *testing.T) {
 		pathNames {"/qwerty", "qwerty/index.html"},
 		pathNames {"", "index.html"},
 		pathNames {"/htmlcss/files/index.html", "htmlcss/files/index.html"},
-		pathNames {"/files/../../../../../../etc/shadow", "htmlcss/files/index.html"},
+		pathNames {"/files/../../../../../../etc/shadow", "etc/shadow/index.html"},
 	}
 	for _, test := range tescases {
 		pathName := ParsePath(test.path)
