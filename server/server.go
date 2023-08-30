@@ -1,26 +1,17 @@
 package server
 
 import (
-	"context"
-	//"log"
-
 	"mime"
 	"strings"
-
-	// "github.com/minio/minio-go/v7/pkg/credentials"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	
 	"github.com/minio/minio-go/v7"
-
 	Minio "netlify/minio"
 	Logic "netlify/logic"
 )
 func RunServer(minioClient *minio.Client)  {
 
 	e := echo.New()
-
   	// Middleware
 	e.Use(middleware.Logger())
    	e.Use(middleware.Recover())
@@ -33,7 +24,7 @@ func RunServer(minioClient *minio.Client)  {
 }
 func Handle(c echo.Context) error {
 	p := Logic.ParsePath(c.Request().URL.Path)
-	res := Minio.GetObject(context.Background(), Minio.RunMinio(), c, p)
+	res := Minio.GetObject(Minio.RunMinio(), c, p)
 
 
 	parts := strings.Split(p, ".")

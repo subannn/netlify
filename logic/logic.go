@@ -4,9 +4,6 @@ import (
 	"strings"
 	"path/filepath"
 )
-
-const index = "index.html"
-
 func ParsePath(path string) string  {
 	if path == "" {
 		return "index.html"

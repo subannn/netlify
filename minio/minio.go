@@ -10,8 +10,6 @@ import (
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
-
-
 func RunMinio() *minio.Client{
 	endpoint := os.Getenv("ENDPOINT")            
 	accessKeyID := os.Getenv("ACCESS_KEY_ID")  		  
@@ -28,7 +26,7 @@ func RunMinio() *minio.Client{
 	return minioClient
 }
 
-func GetObject(ctx context.Context, minioClient *minio.Client, c echo.Context, filePath string) *minio.Object{
+func GetObject(minioClient *minio.Client, c echo.Context, filePath string) *minio.Object{
 	opts := minio.GetObjectOptions{}
 	backetName := strings.Split(c.Request().Host, ":")[0]
 
