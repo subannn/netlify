@@ -5,6 +5,6 @@ import (
 	Server "netlify/server"
 )
 func main() {
-	minioClient := Minio.RunMinio()
-	Server.RunServer(minioClient)
+	Minio.RunMinio()
+	Server.RunServer()
 }
