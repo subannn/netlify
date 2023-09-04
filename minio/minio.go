@@ -10,18 +10,19 @@ import (
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
 )
+
 var minioClient *minio.Client
 
 func RunMinio() {
-	/* 
-	endpoint := "192.168.0.106:9000" 
-	accessKeyID := "TDIF7k0TmCXXClbV1fil"
-	secretAccessKey := "XSFbrmbtyKKGOI5QzlITE9tGpQ9Peagu4ON5FkA4"
+	/*
+		endpoint := "192.168.0.106:9000"
+		accessKeyID := "TDIF7k0TmCXXClbV1fil"
+		secretAccessKey := "XSFbrmbtyKKGOI5QzlITE9tGpQ9Peagu4ON5FkA4"
 	*/
-	endpoint := os.Getenv("ENDPOINT")            
-	accessKeyID := os.Getenv("ACCESS_KEY_ID")  		  
-	secretAccessKey := os.Getenv("SECRET_ACCESS_KEY")  
-	log.Println(endpoint, "\n", accessKeyID, "\n", secretAccessKey)		
+	endpoint := os.Getenv("ENDPOINT")
+	accessKeyID := os.Getenv("ACCESS_KEY_ID")
+	secretAccessKey := os.Getenv("SECRET_ACCESS_KEY")
+	log.Println(endpoint, "\n", accessKeyID, "\n", secretAccessKey)
 	useSSL := false
 	// initialiRunMiniozation of Minio Client
 	client, err := minio.New(endpoint, &minio.Options{
@@ -34,7 +35,7 @@ func RunMinio() {
 	minioClient = client
 }
 
-func GetObject(c echo.Context, filePath string) *minio.Object{
+func GetObject(c echo.Context, filePath string) *minio.Object {
 	opts := minio.GetObjectOptions{}
 	backetName := strings.Split(c.Request().Host, ":")[0]
 	log.Println(backetName, filePath)
@@ -44,11 +45,3 @@ func GetObject(c echo.Context, filePath string) *minio.Object{
 	}
 	return file
 }
-func deleteObject() {
-	opts := minio.RemoveObjectOptions {}
-	err := minioClient.RemoveObject(context.Background(), "testbucket", "study/go.sum", opts)
-	if err != nil {
-    	log.Println(err)
-	}
-}
-

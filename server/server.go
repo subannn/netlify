@@ -3,31 +3,34 @@ package server
 import (
 	"mime"
 	"strings"
+
+	"netlify/logic"
+	"netlify/minio"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	Minio "netlify/minio"
-	Logic "netlify/logic"
 )
-func RunServer()  {
+
+func RunServer() {
 	e := echo.New()
-  	// Middleware
+	// Middleware
 	e.Use(middleware.Logger())
-   	e.Use(middleware.Recover())
+	e.Use(middleware.Recover())
 
-  	// Routes
-  	e.GET("/*", Handle)
+	// Routes
+	e.GET("/*", Handle)
 
-  	// Start server
-  	e.Logger.Fatal(e.Start(":8000"))	
-
+	// Start server
+	e.Logger.Fatal(e.Start(":8000"))
 }
+
 func Handle(c echo.Context) error {
-	p := Logic.ParsePath(c.Request().URL.Path)
-	res := Minio.GetObject(c, p)
+	p := logic.ParsePath(c.Request().URL.Path)
+	res := minio.GetObject(c, p)
 	parts := strings.Split(p, ".")
-	fileType := mime.TypeByExtension("." + parts[len(parts) - 1])
-	if(fileType == "") {
+	fileType := mime.TypeByExtension("." + parts[len(parts)-1])
+	if fileType == "" {
 		fileType = "application/octet"
 	}
-	return c.Stream(200, fileType , res)
+	return c.Stream(200, fileType, res)
 }
