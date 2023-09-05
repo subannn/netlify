@@ -6,9 +6,6 @@ import (
 )
 
 func ParsePath(path string) string {
-	if path == "" {
-		return "index.html"
-	}
 	parsedPath := strings.Split(filepath.Clean(path), "/")
 	correctPath := ""
 	for _, v := range parsedPath {
