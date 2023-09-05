@@ -1,4 +1,4 @@
-module netlify
+module github.com/subannn/netlify
 
 go 1.19
 

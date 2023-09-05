@@ -1,8 +1,8 @@
 package main
 
 import (
-	Minio "netlify/minio"
-	Server "netlify/server"
+	Minio "github.com/subannn/netlify/minio"
+	Server "github.com/subannn/netlify/server"
 )
 
 func main() {

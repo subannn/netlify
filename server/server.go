@@ -3,12 +3,10 @@ package server
 import (
 	"mime"
 	"strings"
-
-	"netlify/logic"
-	"netlify/minio"
-
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/subannn/netlify/logic"
+	"github.com/subannn/netlify/minio"
 )
 
 func RunServer() {
