@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strings"
+
 	"github.com/labstack/echo/v4"
 	"github.com/minio/minio-go/v7"
 	"github.com/minio/minio-go/v7/pkg/credentials"
